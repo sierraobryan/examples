@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_nav_fragment"
+        android:title="Bottom Navigation fragment"
+        android:icon="@drawable/ic_baseline_border_bottom_24"
+        />
+    <item
+        android:id="@+id/menu_navigation_fragment"
+        android:title="No Bottom Nav Fragment"
+        android:icon="@drawable/ic_baseline_border_clear_24"/>
+
+</menu>

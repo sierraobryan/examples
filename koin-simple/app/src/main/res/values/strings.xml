@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">koin-simple</string>
+
+    <string name="author_format">Author: %s</string>
+    <string name="version_format">Version: %s</string>
+    <string name="fingerprint_format">Fingerprint: %s</string>
+
+    <string name="default_base_url">https://api.github.com/</string>
+
+    <string name="username">Username</string>
+    <string name="repository">Repository</string>
+    <string name="fetch_commits">Fetch Commits</string>
+
+    <string name="error_unexpected">We encountered an unexpected error. Please try again.</string>
+    <string name="error_get_commits_error">Could not find the requested commits</string>
+</resources>

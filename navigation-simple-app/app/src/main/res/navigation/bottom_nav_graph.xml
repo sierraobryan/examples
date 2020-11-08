@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/bottom_nav_graph"
+    app:startDestination="@id/item_one_navigation">
+
+    <fragment
+        android:name="com.sierraobryan.navigation_simple_app.ui.menus.FirstFragmentThirdActivity"
+        android:id="@+id/item_one_navigation"/>
+
+    <fragment
+        android:name="com.sierraobryan.navigation_simple_app.ui.menus.SecondFragmentThirdActivity"
+        android:id="@+id/item_two_navigation"/>
+
+    <fragment
+        android:name="com.sierraobryan.navigation_simple_app.ui.menus.ThirdFragmentThirdActivity"
+        android:id="@+id/item_three_navigation"/>
+
+</navigation>

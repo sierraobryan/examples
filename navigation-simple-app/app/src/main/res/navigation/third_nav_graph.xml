@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/third_nav_graph"
+    app:startDestination="@id/bottom_nav_fragment">
+
+    <fragment
+        android:name="com.sierraobryan.navigation_simple_app.ui.menus.BottomNavigationFragment"
+        android:id="@+id/bottom_nav_fragment"/>
+
+    <fragment
+        android:name="com.sierraobryan.navigation_simple_app.ui.menus.NoBottomNavFragmentThirdActivity"
+        android:id="@+id/menu_navigation_fragment"/>
+
+</navigation>

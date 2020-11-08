@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/firstFragmentActivityOne">
+
+    <fragment
+        android:id="@+id/firstFragmentActivityOne"
+        android:name="com.sierraobryan.navigation_simple_app.ui.main.FirstFragmentActivityOne">
+        <action
+            android:id="@+id/action_firstFragment_to_secondFragment_withArg"
+            app:destination="@id/secondFragmentActivityOne">
+            <argument
+                android:name="longArgument"
+                app:argType="long"
+                android:defaultValue="100L" />
+        </action>
+        <action
+            android:id="@+id/action_firstFragment_to_secondFragment_withAnimation"
+            app:destination="@id/secondFragmentActivityOne"
+            app:popEnterAnim="@anim/fade_in"
+            app:enterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out"
+            />
+        <action
+            android:id="@+id/action_firstFragment_to_secondFragment_withAnimation_2"
+            app:destination="@id/secondFragmentActivityOne"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/secondFragmentActivityOne"
+        android:name="com.sierraobryan.navigation_simple_app.ui.main.SecondFragmentActivityOne">
+        <argument
+            android:name="longArgument"
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <action
+            android:id="@+id/action_secondFragment_to_thirdFragment"
+            app:destination="@id/thirdFragmentActivityOne"
+            />
+        <action
+            android:id="@+id/action_secondFragment_to_thirdFragment_3"
+            app:destination="@id/thirdFragmentActivityOne"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="false"
+            />
+        <action
+            android:id="@+id/action_secondFragment_to_thirdFragment_2"
+            app:destination="@id/thirdFragmentActivityOne"
+            app:popUpTo="@id/firstFragmentActivityOne"
+            />
+        <action
+            android:id="@+id/action_secondFragment_to_thirdFragment_4"
+            app:destination="@id/thirdFragmentActivityOne"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/thirdFragmentActivityOne"
+        android:name="com.sierraobryan.navigation_simple_app.ui.main.ThirdFragmentActivityOne">
+        <argument android:name="nonSafeArg" />
+        <action
+            android:id="@+id/action_thirdFragment_to_firstFragment"
+            app:destination="@id/firstFragmentActivityOne"
+            />
+        <action
+            android:id="@+id/action_thirdFragment_to_firstFragment_2"
+            app:destination="@id/firstFragmentActivityOne"
+            app:popUpTo="@+id/firstFragmentActivityOne"
+            />
+        <action
+            android:id="@+id/action_thirdFragment_to_firstFragment_3"
+            app:destination="@id/firstFragmentActivityOne"
+            app:popUpTo="@id/firstFragmentActivityOne"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+
+</navigation>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_one_navigation"
+        android:title="Item One"
+        android:icon="@drawable/ic_baseline_home_24"
+        />
+    <item
+        android:id="@+id/item_two_navigation"
+        android:title="Item Two"
+        android:icon="@drawable/ic_baseline_dashboard_24"/>
+    <item
+        android:id="@+id/item_three_navigation"
+        android:title="Item Three"
+        android:icon="@drawable/ic_baseline_person_24"/>
+</menu>

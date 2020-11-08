@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/fragment_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Navigate with Safe Arg Action"
+            app:layout_constraintBottom_toBottomOf="@+id/button"
+            app:layout_constraintEnd_toStartOf="@id/button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button" />
+
+        <TextView
+            android:id="@+id/button2Description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Navigate with using the action id, define value of arg in nav graph"
+            app:layout_constraintTop_toBottomOf="@id/button2"
+            app:layout_constraintStart_toStartOf="@id/button2"
+            app:layout_constraintEnd_toEndOf="@id/button2" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Navigate with Safe Arg function"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button2"
+            app:layout_constraintTop_toBottomOf="@id/fragment_name" />
+
+        <TextView
+            android:id="@+id/buttonDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Navigate with using the generated direction and dynamically pass in arg value"
+            app:layout_constraintTop_toBottomOf="@id/button"
+            app:layout_constraintStart_toStartOf="@id/button"
+            app:layout_constraintEnd_toEndOf="@id/button" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Navigate with Fade Animation"
+            app:layout_constraintEnd_toStartOf="@id/button4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button4"
+            app:layout_constraintBottom_toBottomOf="@id/button4"/>
+
+        <TextView
+            android:id="@+id/button3Description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Navigate and fragment 2 will fade in, animation defined in anim folder"
+            app:layout_constraintTop_toBottomOf="@id/button3"
+            app:layout_constraintStart_toStartOf="@id/button3"
+            app:layout_constraintEnd_toEndOf="@id/button3" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Navigate with Slide in Animation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button3"
+            app:layout_constraintTop_toBottomOf="@id/buttonDescription" />
+
+        <TextView
+            android:id="@+id/button4Description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Navigate and fragment 2 will slide in, animation defined in anim folder"
+            app:layout_constraintTop_toBottomOf="@id/button4"
+            app:layout_constraintStart_toStartOf="@id/button4"
+            app:layout_constraintEnd_toEndOf="@id/button4" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Navigate to Activity 2, frag 1"
+            app:layout_constraintEnd_toStartOf="@id/button6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button3Description" />
+
+        <TextView
+            android:id="@+id/button5Description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Start new activity with new nav graph and navigate to fragment 1"
+            app:layout_constraintTop_toBottomOf="@id/button5"
+            app:layout_constraintStart_toStartOf="@id/button5"
+            app:layout_constraintEnd_toEndOf="@id/button5" />
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Navigate to Activity 2, frag 2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button5"
+            app:layout_constraintTop_toBottomOf="@id/button3Description" />
+
+        <TextView
+            android:id="@+id/button6Description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Start new activity with new nav graph and navigate to fragment 2"
+            app:layout_constraintTop_toBottomOf="@id/button6"
+            app:layout_constraintStart_toStartOf="@id/button6"
+            app:layout_constraintEnd_toEndOf="@id/button6" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Navigate to Activity 2, empty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button5Description" />
+
+        <TextView
+            android:id="@+id/button7Description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Navigate to empty fragment in activity 2"
+            app:layout_constraintTop_toBottomOf="@id/button7"
+            app:layout_constraintStart_toStartOf="@id/button7"
+            app:layout_constraintEnd_toEndOf="@id/button7" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:text="Navigate to Menus Activity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button7Description" />
+
+        <TextView
+            android:id="@+id/button8Description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Navigate to Activity with examples of bottom nav, navigation drawer, and menu"
+            app:layout_constraintTop_toBottomOf="@id/button8"
+            app:layout_constraintStart_toStartOf="@id/button8"
+            app:layout_constraintEnd_toEndOf="@id/button8" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/secondary_nav_graph"
+    app:startDestination="@id/emptyFragment">
+
+    <fragment
+        android:id="@+id/emptyFragment"
+        android:name="com.sierraobryan.navigation_simple_app.ui.secondary.EmptyFragment">
+        <action
+            android:id="@+id/action_emptyFragment_to_firstFragment"
+            app:destination="@id/firstFragmentActivityTwo"
+            app:popUpTo="@id/secondary_nav_graph"
+            app:popUpToInclusive="true"
+            app:popEnterAnim="@anim/slide_down"
+            app:enterAnim="@anim/slide_down"
+            app:popExitAnim="@anim/slide_top"
+            app:exitAnim="@anim/slide_top"
+            />
+        <action
+            android:id="@+id/action_emptyFragment_to_secondFragment"
+            app:destination="@id/secondFragmentActivityTwo"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"
+            app:exitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/secondary_nav_graph"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/firstFragmentActivityTwo"
+        android:name="com.sierraobryan.navigation_simple_app.ui.secondary.FirstFragmentActivityTwo">
+    </fragment>
+
+    <fragment
+        android:id="@+id/secondFragmentActivityTwo"
+        android:name="com.sierraobryan.navigation_simple_app.ui.secondary.SecondFragmentActivityTwo">
+    </fragment>
+
+</navigation>
