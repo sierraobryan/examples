@@ -14,16 +14,8 @@ class ProtoAppDataStore @Inject constructor(
     private val protoAppDataStore: DataStore<MemberPreferences>
 ) {
 
-    val myMemberPreferencesFlow: Flow<MemberPreferences> = protoAppDataStore.data
-        .catch { exception ->
-            // dataStore.data throws an IOException when an error is encountered when reading data
-            if (exception is IOException) {
-                Log.wtf("Yikes", "Error reading sort order preferences.", exception)
-                emit(MemberPreferences.getDefaultInstance())
-            } else {
-                throw exception
-            }
-        }
+    val myMemberFlow: Flow<MemberPreferences.Member> = protoAppDataStore.data
+        .map { currentData -> currentData.member }
 
     suspend fun saveMember(member: MemberPreferences.Member) {
         protoAppDataStore.updateData { current ->
