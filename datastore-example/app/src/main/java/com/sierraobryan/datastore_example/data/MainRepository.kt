@@ -5,17 +5,17 @@ import com.sierraobryan.datastore_example.data.models.MemberRole
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
-    private val appSharedPreferences: AppSharedPreferences
+    private val appDataStore: AppDataStore
 ) {
 
-    val member = appSharedPreferences.member
+    val member = appDataStore.myMemberFlow
 
-    fun addMember(member: Member) {
-        appSharedPreferences.saveMember(member)
+    suspend fun addMember(member: Member) {
+        appDataStore.saveMember(member)
     }
 
-    fun removeMember() {
-        appSharedPreferences.removeMember()
+    suspend fun removeMember() {
+        appDataStore.removeMember()
     }
 
 }

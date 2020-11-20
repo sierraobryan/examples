@@ -15,15 +15,15 @@ class AppSharedPreferences @Inject constructor(
 
     private var savedMember = sharedPreferences.getString(MEMBER, "")
 
-    init {
-        saveMember(
-            Member(
-                name = "Sierra",
-                role = MemberRole.VOLUNTEER,
-                techs = listOf("Android", "kotlin")
-            )
-        )
-    }
+//    init {
+//        saveMember(
+//            Member(
+//                name = "Sierra",
+//                role = MemberRole.VOLUNTEER,
+//                techs = listOf("Android", "kotlin")
+//            )
+//        )
+//    }
 
     fun saveMember(member: Member?) {
         this.savedMember = Gson().toJson(member)
