@@ -58,9 +58,7 @@ class AppModule {
                     context,
                     Constants.SHARED_PREFERENCES_NAME
                 ) { sharedPrefs: SharedPreferencesView, currentData: MemberPreferences ->
-                    currentData.toBuilder().setMember(
-                        sharedPrefs.getString(Constants.MEMBER_KEY)
-                    ).build()
+                    currentData
                 }
             )
         )

@@ -5,6 +5,19 @@ option java_multiple_files = true;
 
 message MemberPreferences {
 
-  string member = 1;
+  enum MemberRole {
+    MEMBER = 0;
+    VOLUNTEER = 1;
+    EVANGELIST = 2;
+    LEAD = 3;
+    DIRECTOR = 4;
+  }
 
+  message Member {
+    string name = 1;
+    MemberRole role = 2;
+    repeated string techs = 3;
+  }
+
+  Member member = 1;
 }
