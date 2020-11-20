@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.sierraobryan.datastore_example.data.models.Member
 import com.sierraobryan.datastore_example.data.models.MemberRole
+import com.sierraobryan.datastore_example.util.Constants
 import javax.inject.Inject
 
 class AppSharedPreferences @Inject constructor(
@@ -13,7 +14,7 @@ class AppSharedPreferences @Inject constructor(
 
     val member = MutableLiveData<Member?>()
 
-    private var savedMember = sharedPreferences.getString(MEMBER, "")
+    private var savedMember = sharedPreferences.getString(Constants.MEMBER_KEY, "")
 
 //    init {
 //        saveMember(
@@ -27,7 +28,7 @@ class AppSharedPreferences @Inject constructor(
 
     fun saveMember(member: Member?) {
         this.savedMember = Gson().toJson(member)
-        sharedPreferences.edit().putString(MEMBER, this.savedMember).apply()
+        sharedPreferences.edit().putString(Constants.MEMBER_KEY, this.savedMember).apply()
         this.member.postValue(getSavedMember())
     }
 
@@ -42,12 +43,4 @@ class AppSharedPreferences @Inject constructor(
             null
         }
     }
-
-    companion object {
-        const val MEMBER = "member"
-    }
-
-
-
-
 }

@@ -5,17 +5,17 @@ import com.sierraobryan.datastore_example.data.models.MemberRole
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
-    private val appDataStore: AppDataStore
+    private val protoAppDataStore: ProtoAppDataStore
 ) {
 
-    val member = appDataStore.myMemberFlow
+    val member = protoAppDataStore.myMemberFlow
 
     suspend fun addMember(member: Member) {
-        appDataStore.saveMember(member)
+        protoAppDataStore.saveMember(member)
     }
 
     suspend fun removeMember() {
-        appDataStore.removeMember()
+        protoAppDataStore.removeMember()
     }
 
 }

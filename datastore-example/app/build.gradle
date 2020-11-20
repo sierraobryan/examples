@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id "com.google.protobuf" version "0.8.12"
 }
 
 android {
@@ -41,6 +42,7 @@ android {
 ext {
     daggerHiltVersion = "1.0.0-alpha02"
     daggerHiltCoreVersion = "2.29.1-alpha"
+    protobufVersion = '3.10.0'
 }
 
 
@@ -63,10 +65,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Preferences DataStore
-    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha04"
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha01"
 
     // Proto DataStore
-    implementation  "androidx.datastore:datastore-core:1.0.0-alpha04"
+    implementation  "androidx.datastore:datastore-core:1.0.0-alpha01"
+    // protobuf
+    implementation  "com.google.protobuf:protobuf-javalite:$protobufVersion"
 
     // hilt
     implementation "com.google.dagger:hilt-android:${daggerHiltCoreVersion}"
@@ -77,4 +81,23 @@ dependencies {
     androidTestImplementation "com.google.dagger:hilt-android-testing:${daggerHiltCoreVersion}"
     kaptAndroidTest "com.google.dagger:hilt-compiler:${daggerHiltCoreVersion}"
 
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.10.0"
+    }
+
+    // Generates the java Protobuf-lite code for the Protobufs in this project. See
+    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+    // for more information.
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
 }

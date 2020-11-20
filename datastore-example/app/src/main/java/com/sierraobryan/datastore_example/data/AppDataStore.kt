@@ -1,7 +1,7 @@
 package com.sierraobryan.datastore_example.data
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.*
+import androidx.datastore.DataStore
+import androidx.datastore.preferences.*
 import com.google.gson.Gson
 import com.sierraobryan.datastore_example.data.models.Member
 import kotlinx.coroutines.flow.Flow
