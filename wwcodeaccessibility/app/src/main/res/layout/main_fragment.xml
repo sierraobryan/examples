@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.sierraobryan.wwcode_accessibility.ui.main.MainViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MainFragment">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/username"
+            android:layout_margin="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/username_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@={vm.username}"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name" />
+
+        <TextView
+            android:id="@+id/repo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/repository"
+            android:layout_margin="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/username_input" />
+
+        <EditText
+            android:id="@+id/repo_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@={vm.repoName}"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/repo" />
+
+        <TextView
+            android:id="@+id/clear_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/clear"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:onClick="@{() -> vm.clearFields()}"
+            app:layout_constraintTop_toTopOf="@id/get_commits"
+            app:layout_constraintBottom_toBottomOf="@id/get_commits"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/get_commits"
+            />
+
+        <Button
+            android:id="@+id/get_commits"
+            android:layout_width="0dp"
+            android:layout_margin="20dp"
+            android:layout_height="wrap_content"
+            android:enabled="@{vm.fetchCommitsEnabled}"
+            android:text="@string/fetch_commits"
+            android:onClick="@{() -> vm.listCommits()}"
+            app:layout_constraintTop_toBottomOf="@id/repo_input"
+            app:layout_constraintStart_toEndOf="@id/clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/commits"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="0dp"
+            android:scrollbars="vertical"
+            app:items="@{vm.commits}"
+            app:visible="@{!vm.isLoading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/get_commits" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/purple_700"
+            app:visible="@{vm.isLoading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/get_commits"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
