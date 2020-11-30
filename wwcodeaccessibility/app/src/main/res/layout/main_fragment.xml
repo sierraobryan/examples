@@ -78,6 +78,7 @@
             android:layout_width="0dp"
             android:layout_margin="20dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/purple_200"
             android:enabled="@{vm.fetchCommitsEnabled}"
             android:text="@string/fetch_commits"
             android:onClick="@{() -> vm.listCommits()}"
@@ -110,6 +111,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/get_commits"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_baseline_refresh_24"
+            android:background="@drawable/circle"
+            android:onClick="@{() -> vm.listCommits()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
