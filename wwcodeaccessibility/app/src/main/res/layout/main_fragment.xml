@@ -29,6 +29,7 @@
         <EditText
             android:id="@+id/username_input"
             android:layout_width="0dp"
+            android:minHeight="48dp"
             android:layout_height="wrap_content"
             android:text="@={vm.username}"
             android:layout_marginStart="20dp"
@@ -51,6 +52,7 @@
             android:id="@+id/repo_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:text="@={vm.repoName}"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
@@ -66,6 +68,8 @@
             android:text="@string/clear"
             android:textSize="24sp"
             android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@color/purple_500"
             android:onClick="@{() -> vm.clearFields()}"
             app:layout_constraintTop_toTopOf="@id/get_commits"
             app:layout_constraintBottom_toBottomOf="@id/get_commits"
@@ -91,14 +95,15 @@
             android:id="@+id/commits"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="0dp"
             android:scrollbars="vertical"
             app:items="@{vm.commits}"
-            app:visible="@{!vm.isLoading}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/get_commits" />
+            app:layout_constraintTop_toBottomOf="@+id/get_commits"
+            app:layout_constraintVertical_bias="0.0"
+            app:visible="@{!vm.isLoading}" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -113,8 +118,9 @@
             app:layout_constraintTop_toBottomOf="@+id/get_commits"/>
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="8dp"
             android:layout_margin="20dp"
             android:src="@drawable/ic_baseline_refresh_24"
             android:background="@drawable/circle"
