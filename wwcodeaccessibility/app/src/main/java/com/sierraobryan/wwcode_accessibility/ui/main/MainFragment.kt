@@ -1,10 +1,15 @@
 package com.sierraobryan.wwcode_accessibility.ui.main
 
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.method.TextKeyListener.clear
+import android.text.style.TtsSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +20,7 @@ import com.sierraobryan.wwcode_accessibility.data.models.Commit
 import com.sierraobryan.wwcode_accessibility.databinding.MainFragmentBinding
 import com.sierraobryan.wwcode_accessibility.utils.ArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.main_fragment.*
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -35,6 +41,10 @@ class MainFragment : Fragment() {
         binding.vm = viewModel
         binding.commits.layoutManager = LinearLayoutManager(activity)
         binding.commits.adapter = CommitsAdapter()
+        val title = "5 meter"
+        val spannable = SpannableString(title)
+        spannable.setSpan(TtsSpan.MeasureBuilder().setNumber(5).setUnit("meter"), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        binding.tester.text = spannable
         return binding.root
     }
 
