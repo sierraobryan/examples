@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">movie-db-api</string>
+    <string name="authorize">Authorize</string>
+    <string name="create_session_id">Create Session Id</string>
+    <string name="movie_db_authorize_url">https://www.themoviedb.org/authenticate/</string>
+</resources>
