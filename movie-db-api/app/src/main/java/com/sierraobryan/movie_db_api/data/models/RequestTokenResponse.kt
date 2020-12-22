@@ -18,3 +18,15 @@ data class CreateSessionBody(
 data class CreateSessionResponse(
     @Json(name = "session_id") val sessionId: String
 )
+
+@JsonClass(generateAdapter = true)
+data class RateMovieBody(
+    @Json(name = "value") val movieRating: Double
+)
+
+@JsonClass(generateAdapter = true)
+data class RateMovieResponse(
+        @Json(name = "success") val success: Boolean,
+        @Json(name = "status_code") val code: Int,
+        @Json(name = "status_message") val message: String
+)

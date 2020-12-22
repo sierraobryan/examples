@@ -18,6 +18,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        def apiKey = getValueFromPropertyOrEnv(project, "com.sierraobryan.moviedbapi.apiKey", "API_KEY")
+
+        buildConfigField("String", "API_KEY", apiKey)
     }
 
     buildTypes {
@@ -51,6 +55,8 @@ ext {
     daggerHiltVersion = "1.0.0-alpha02"
     daggerHiltCoreVersion = "2.29.1-alpha"
 
+    preferencesDataStoreVersion = "1.0.0-alpha04"
+
 }
 
 dependencies {
@@ -80,8 +86,27 @@ dependencies {
     androidTestImplementation "com.google.dagger:hilt-android-testing:${daggerHiltCoreVersion}"
     kaptAndroidTest "com.google.dagger:hilt-compiler:${daggerHiltCoreVersion}"
 
+    // Preferences DataStore
+    implementation "androidx.datastore:datastore-preferences:${preferencesDataStoreVersion}"
+
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+static def getValueFromPropertyOrEnv(project, property, env, defaultValue = "") {
+    def value
+
+    if (project.hasProperty(property)) {
+        value = project.property(property)
+    } else {
+        value = System.getenv(env)
+    }
+
+    if (value == null) {
+        value = defaultValue
+    }
+
+    return value
 }

@@ -1,5 +1,6 @@
 package com.sierraobryan.movie_db_api.app
 
+import com.sierraobryan.movie_db_api.BuildConfig
 import com.sierraobryan.movie_db_api.network.MovieDbAuthenticationApi
 import dagger.Module
 import dagger.Provides
@@ -19,10 +20,17 @@ class NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(
-                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-            )
-            .build()
+                .addInterceptor(
+                        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+                )
+                .addInterceptor { chain ->
+                    val url = chain.request().url.newBuilder()
+                            .addQueryParameter("api_key", BuildConfig.API_KEY)
+                            .build()
+                    val newRequest = chain.request().newBuilder().url(url).build()
+                    chain.proceed(newRequest)
+                }
+                .build()
     }
 
     @Provides
@@ -30,7 +38,7 @@ class NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("https://api.themoviedb.org/")
+            .baseUrl("https://api.themoviedb.org/3/")
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }

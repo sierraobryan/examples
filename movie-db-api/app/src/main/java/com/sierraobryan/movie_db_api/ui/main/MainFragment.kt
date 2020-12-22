@@ -2,13 +2,12 @@ package com.sierraobryan.movie_db_api.ui.main
 
 import android.content.Intent
 import android.net.Uri
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.sierraobryan.movie_db_api.R
 import com.sierraobryan.movie_db_api.databinding.MainFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +19,7 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -31,22 +30,32 @@ class MainFragment : Fragment() {
             viewModel.getRequestToken()
         }
         binding.createIdButton.setOnClickListener {
-            viewModel.createSessionId()
+            viewModel.rateMovie()
         }
 
         viewModel.requestToken.observe(viewLifecycleOwner) { requestToken ->
             if (requestToken.isNotBlank()) {
-                binding.createIdButton.isEnabled = true
                 val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse(getString(R.string.movie_db_authorize_url) + requestToken)
+                intent.data = Uri.parse(
+                        String.format(
+                                getString(R.string.movie_db_authorize_url),
+                                requestToken,
+                                requestToken
+                        )
+                )
                 startActivity(intent)
-            } else {
-                binding.createIdButton.isEnabled = false
             }
         }
 
         viewModel.sessionId.observe(viewLifecycleOwner) { sessionId ->
-            binding.sessionId.text = sessionId
+            if (sessionId.isNotBlank()) {
+                binding.sessionId.text = sessionId
+                binding.createIdButton.isEnabled = true
+            }
+        }
+
+        viewModel.rateMovieResponseMessage.observe(viewLifecycleOwner) {
+            binding.movieMessage.text = it
         }
 
 

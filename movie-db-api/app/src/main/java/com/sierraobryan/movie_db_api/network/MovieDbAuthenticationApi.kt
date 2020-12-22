@@ -1,24 +1,22 @@
 package com.sierraobryan.movie_db_api.network
 
-import com.sierraobryan.movie_db_api.data.models.CreateSessionBody
-import com.sierraobryan.movie_db_api.data.models.CreateSessionResponse
-import com.sierraobryan.movie_db_api.data.models.RequestTokenResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import com.sierraobryan.movie_db_api.data.models.*
+import retrofit2.http.*
+import javax.annotation.PostConstruct
 
 interface MovieDbAuthenticationApi {
 
-    @GET("3/authentication/token/new")
-    suspend fun getRequestToken(
-        @Query("api_key") apiKey: String = ""
-    ): RequestTokenResponse
+    @GET("authentication/token/new")
+    suspend fun getRequestToken(): RequestTokenResponse
 
-    @POST("3/authentication/session/new")
-    suspend fun createSessionId(
-        @Query("api_key") apiKey: String = "",
-        @Body body: CreateSessionBody
-    ): CreateSessionResponse
+    @POST("authentication/session/new")
+    suspend fun createSessionId(@Body body: CreateSessionBody): CreateSessionResponse
+
+    @POST("movie/{movie_id}/rating")
+    suspend fun rateMovie(
+            @Path("movie_id") movieId: Int = 726208,
+            @Query("session_id") sessionId: String,
+            @Body body: RateMovieBody
+    ): RateMovieResponse
 
 }

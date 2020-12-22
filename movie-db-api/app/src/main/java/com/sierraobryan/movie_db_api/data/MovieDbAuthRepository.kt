@@ -1,10 +1,11 @@
 package com.sierraobryan.movie_db_api.data
 
 import com.sierraobryan.movie_db_api.data.models.CreateSessionBody
+import com.sierraobryan.movie_db_api.data.models.RateMovieBody
 import com.sierraobryan.movie_db_api.network.MovieDbAuthenticationApi
 import javax.inject.Inject
 
-class movieDbRepository @Inject constructor(
+class MovieDbAuthRepository @Inject constructor(
     private val movieDbAuthenticationApi: MovieDbAuthenticationApi
 ) {
 
@@ -16,5 +17,15 @@ class movieDbRepository @Inject constructor(
         body = CreateSessionBody(
             authorizedRequestToken = authenticatedRequestToken
         )
+    )
+
+    suspend fun rateMovie(
+            sessionId: String,
+            movieRating: Double
+    ) = movieDbAuthenticationApi.rateMovie(
+            sessionId = sessionId,
+            body = RateMovieBody(
+                    movieRating = movieRating
+            )
     )
 }
