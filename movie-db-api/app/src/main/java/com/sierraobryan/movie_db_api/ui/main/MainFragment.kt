@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.sierraobryan.movie_db_api.R
 import com.sierraobryan.movie_db_api.databinding.MainFragmentBinding
@@ -33,6 +34,9 @@ class MainFragment : Fragment() {
         binding.rateMovieButton.setOnClickListener {
             viewModel.rateMovie()
         }
+        binding.logoutButton.setOnClickListener {
+            viewModel.deleteSession()
+        }
 
         viewModel.requestToken.observe(viewLifecycleOwner) { requestToken ->
             if (requestToken != null && viewModel.shouldImmediatelyNavigateToWeb) {
@@ -53,18 +57,26 @@ class MainFragment : Fragment() {
 
         viewModel.sessionId.observe(viewLifecycleOwner) { sessionId ->
             if (sessionId?.isNotBlank() == true) {
-
                 binding.sessionId.text = sessionId
-
                 binding.authorizeButton.isEnabled = false
                 binding.authorizeButton.text = getString(R.string.authorized)
-
+                binding.logoutButton.visibility = View.VISIBLE
                 binding.rateMovieButton.isEnabled = true
+            } else {
+                binding.sessionId.text = getString(R.string.create_session_id)
+                binding.logoutButton.visibility = View.INVISIBLE
+                binding.rateMovieButton.isEnabled = false
             }
         }
 
         viewModel.rateMovieResponseMessage.observe(viewLifecycleOwner) {
             binding.movieMessage.text = it
+        }
+
+        viewModel.loggedOut.observe(viewLifecycleOwner) { loggedOut ->
+            if (loggedOut) {
+                Toast.makeText(requireContext(), R.string.logged_out, Toast.LENGTH_SHORT).show()
+            }
         }
 
         return binding.root

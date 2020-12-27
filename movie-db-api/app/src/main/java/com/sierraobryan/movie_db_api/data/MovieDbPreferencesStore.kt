@@ -41,6 +41,10 @@ class MovieDbPreferencesStore @Inject constructor(
         }
     }
 
+    suspend fun removeSessionId() {
+        dataStore.edit { prefs -> prefs.remove(SESSION_ID) }
+    }
+
     suspend fun saveRequestToken(requestTokenResponse: RequestTokenResponse) {
         dataStore.edit { prefs ->
             prefs[REQUEST_TOKEN] = Gson().toJson(requestTokenResponse)

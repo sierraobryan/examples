@@ -25,8 +25,8 @@ data class RateMovieBody(
 )
 
 @JsonClass(generateAdapter = true)
-data class RateMovieResponse(
+data class PostEndpointResponse(
         @Json(name = "success") val success: Boolean,
-        @Json(name = "status_code") val code: Int,
-        @Json(name = "status_message") val message: String
+        @Json(name = "status_code") val code: Int = -1,
+        @Json(name = "status_message") val message: String = ""
 )

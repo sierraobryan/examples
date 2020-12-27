@@ -18,7 +18,8 @@ class MainViewModel @ViewModelInject constructor(
     val requestToken = movieDbPreferencesStore.requestTokenFlow.asLiveData()
     val sessionId = movieDbPreferencesStore.sessionIdFlow.asLiveData()
 
-    val rateMovieResponseMessage = MutableLiveData<String>()
+    val rateMovieResponseMessage = MutableLiveData("")
+    val loggedOut = MutableLiveData(false)
 
     var shouldImmediatelyNavigateToWeb = false
 
@@ -39,6 +40,22 @@ class MainViewModel @ViewModelInject constructor(
                 val sessionIdResponse = movieDbAuthRepository.createSessionId(requestToken)
                 movieDbPreferencesStore.saveSessionId(sessionIdResponse.sessionId)
             } catch (e: Exception) {
+            }
+        }
+    }
+
+    fun deleteSession() {
+        viewModelScope.launch {
+            try {
+                val response = movieDbAuthRepository.deleteSession(
+                    sessionId = sessionId.value!!.trim()
+                )
+                if (response.success) {
+                    movieDbPreferencesStore.removeSessionId()
+                }
+                loggedOut.postValue(response.success)
+            } catch (e: Exception) {
+                loggedOut.postValue(false)
             }
         }
     }

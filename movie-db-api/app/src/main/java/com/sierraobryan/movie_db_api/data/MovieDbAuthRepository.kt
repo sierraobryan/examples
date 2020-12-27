@@ -1,6 +1,8 @@
 package com.sierraobryan.movie_db_api.data
 
 import com.sierraobryan.movie_db_api.data.models.CreateSessionBody
+import com.sierraobryan.movie_db_api.data.models.CreateSessionResponse
+import com.sierraobryan.movie_db_api.data.models.PostEndpointResponse
 import com.sierraobryan.movie_db_api.data.models.RateMovieBody
 import com.sierraobryan.movie_db_api.network.MovieDbAuthenticationApi
 import javax.inject.Inject
@@ -18,6 +20,14 @@ class MovieDbAuthRepository @Inject constructor(
             authorizedRequestToken = authenticatedRequestToken
         )
     )
+
+    suspend fun deleteSession(
+        sessionId: String?
+    ) = movieDbAuthenticationApi.deleteSession(
+                body = CreateSessionResponse(
+                    sessionId = sessionId ?: ""
+                )
+            )
 
     suspend fun rateMovie(
             sessionId: String,
