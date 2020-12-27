@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">movie-db-api</string>
     <string name="authorize">Authorize</string>
+    <string name="authorized">Authorized</string>
+    <string name="retry_authorize">Retry Authorize</string>
     <string name="create_session_id">Create Session Id</string>
     <string name="movie_db_authorize_url">https://www.themoviedb.org/authenticate/%s?redirect_to=http://www.movie-db-api-app.com/home/%s</string>
+    <string name="rate_movie">Rate movie</string>
 </resources>

@@ -26,31 +26,40 @@ class MainFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?): View {
         val binding = MainFragmentBinding.inflate(inflater, container, false)
+
         binding.authorizeButton.setOnClickListener {
             viewModel.getRequestToken()
         }
-        binding.createIdButton.setOnClickListener {
+        binding.rateMovieButton.setOnClickListener {
             viewModel.rateMovie()
         }
 
         viewModel.requestToken.observe(viewLifecycleOwner) { requestToken ->
-            if (requestToken.isNotBlank()) {
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse(
-                        String.format(
-                                getString(R.string.movie_db_authorize_url),
-                                requestToken,
-                                requestToken
-                        )
-                )
-                startActivity(intent)
+            if (requestToken != null && viewModel.shouldImmediatelyNavigateToWeb) {
+                navigateToWebAuth(requestToken.requestToken)
+            } else {
+                when {
+                    requestToken != null -> {
+                        binding.authorizeButton.isEnabled = true
+                        binding.authorizeButton.text = getString(R.string.retry_authorize)
+                    }
+                    else -> {
+                        binding.authorizeButton.isEnabled = true
+                        binding.authorizeButton.text = getString(R.string.authorize)
+                    }
+                }
             }
         }
 
         viewModel.sessionId.observe(viewLifecycleOwner) { sessionId ->
-            if (sessionId.isNotBlank()) {
+            if (sessionId?.isNotBlank() == true) {
+
                 binding.sessionId.text = sessionId
-                binding.createIdButton.isEnabled = true
+
+                binding.authorizeButton.isEnabled = false
+                binding.authorizeButton.text = getString(R.string.authorized)
+
+                binding.rateMovieButton.isEnabled = true
             }
         }
 
@@ -58,13 +67,21 @@ class MainFragment : Fragment() {
             binding.movieMessage.text = it
         }
 
-
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    private fun navigateToWebAuth(requestToken: String?) {
+        if (!requestToken.isNullOrBlank()) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(
+                    String.format(
+                            getString(R.string.movie_db_authorize_url),
+                            requestToken,
+                            requestToken
+                    )
+            )
+            startActivity(intent)
+        }
     }
 
 }

@@ -52,6 +52,8 @@ ext {
     moshiVersion = "1.11.0"
     retrofitVersion = "2.9.0"
 
+    gsonVersion = "2.8.6"
+
     daggerHiltVersion = "1.0.0-alpha02"
     daggerHiltCoreVersion = "2.29.1-alpha"
 
@@ -76,6 +78,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     implementation "com.squareup.retrofit2:converter-moshi:${retrofitVersion}"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+
+    implementation "com.google.code.gson:gson:${gsonVersion}"
 
     // hilt
     implementation "com.google.dagger:hilt-android:${daggerHiltCoreVersion}"

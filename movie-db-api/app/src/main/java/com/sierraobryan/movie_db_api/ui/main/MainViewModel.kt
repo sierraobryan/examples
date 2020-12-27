@@ -3,6 +3,7 @@ package com.sierraobryan.movie_db_api.ui.main
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.sierraobryan.movie_db_api.data.MovieDbAuthRepository
 import com.sierraobryan.movie_db_api.data.MovieDbPreferencesStore
@@ -14,26 +15,29 @@ class MainViewModel @ViewModelInject constructor(
         private val movieDbPreferencesStore: MovieDbPreferencesStore
 ) : ViewModel() {
 
-    val requestToken = MutableLiveData<String>()
-    val sessionId = MutableLiveData<String>()
+    val requestToken = movieDbPreferencesStore.requestTokenFlow.asLiveData()
+    val sessionId = movieDbPreferencesStore.sessionIdFlow.asLiveData()
+
     val rateMovieResponseMessage = MutableLiveData<String>()
 
+    var shouldImmediatelyNavigateToWeb = false
+
     fun getRequestToken() {
+        shouldImmediatelyNavigateToWeb = true
         viewModelScope.launch {
             try {
                 val requestTokenResponse = movieDbAuthRepository.getRequestToken()
-                requestToken.postValue(requestTokenResponse.requestToken)
+                movieDbPreferencesStore.saveRequestToken(requestTokenResponse)
             } catch (e: Exception) {
             }
         }
     }
 
-    fun createSessionId(requestToken: String = this.requestToken.value!!.trim()) {
+    fun createSessionId(requestToken: String = this.requestToken.value!!.requestToken.trim()) {
         viewModelScope.launch {
             try {
                 val sessionIdResponse = movieDbAuthRepository.createSessionId(requestToken)
                 movieDbPreferencesStore.saveSessionId(sessionIdResponse.sessionId)
-                sessionId.postValue(sessionIdResponse.sessionId)
             } catch (e: Exception) {
             }
         }
