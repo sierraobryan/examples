@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -145,8 +145,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             val preview = findViewById<ImageView>(R.id.preview)
-            val imageBitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
-                ?: return
+            val imageBitmap = getBitmapFromUri(imageUri) ?: return
 
             val scaleFactor = max(
                 imageBitmap.width.toFloat() / preview.width.toFloat(),
@@ -165,6 +164,15 @@ class MainActivity : AppCompatActivity() {
         } catch (e: IOException) {
             Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    @Throws(IOException::class)
+    private fun getBitmapFromUri(uri: Uri): Bitmap? {
+        val parcelFileDescriptor = contentResolver.openFileDescriptor(uri, "r")
+        val fileDescriptor = parcelFileDescriptor?.fileDescriptor
+        val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+        parcelFileDescriptor?.close()
+        return image
     }
 
     private fun onSelectImageResult(isSuccessful: Boolean = true) {
