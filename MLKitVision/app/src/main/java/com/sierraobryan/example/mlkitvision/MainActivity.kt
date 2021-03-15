@@ -46,10 +46,11 @@ class MainActivity : AppCompatActivity() {
             if (imageBitmap != null) {
                 val imageInput = InputImage.fromBitmap(imageBitmap!!, 0)
                 val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
-                labeler.process(imageInput).addOnSuccessListener {
+                labeler.process(imageInput).addOnSuccessListener { labels ->
+
                     val recyclerView = findViewById<RecyclerView>(R.id.labels)
                     recyclerView.layoutManager = LinearLayoutManager(this)
-                    recyclerView.adapter = LabelAdapter(it)
+                    recyclerView.adapter = LabelAdapter(labels)
                     recyclerView.visibility = View.VISIBLE
 
                 }.addOnFailureListener {
@@ -57,7 +58,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun getRequiredPermissions(): Array<String?> {
@@ -130,7 +130,9 @@ class MainActivity : AppCompatActivity() {
         data: Intent?
     ) {
         onSelectImageResult(data?.data != null)
-        if (requestCode == REQUEST_CHOOSE_IMAGE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_CHOOSE_IMAGE &&
+            resultCode == Activity.RESULT_OK
+        ) {
             val imageUri = data!!.data
             setPreview(imageUri)
         } else {
@@ -140,35 +142,28 @@ class MainActivity : AppCompatActivity() {
 
     private fun setPreview(imageUri: Uri?) {
         try {
-            if (imageUri == null) {
-                return
-            }
+            if (imageUri == null) return
 
             val preview = findViewById<ImageView>(R.id.preview)
+
             val imageBitmap = getBitmapFromUri(imageUri) ?: return
 
-            val scaleFactor = max(
-                imageBitmap.width.toFloat() / preview.width.toFloat(),
-                imageBitmap.height.toFloat() / preview.height.toFloat()
-            )
-
-            val resizedBitmap = Bitmap.createScaledBitmap(
-                imageBitmap,
-                (imageBitmap.width / scaleFactor).toInt(),
-                (imageBitmap.height / scaleFactor).toInt(),
-                true
-            )
             this.imageBitmap = imageBitmap
-            preview.setImageBitmap(resizedBitmap)
+
+            preview.setImageBitmap(imageBitmap)
 
         } catch (e: IOException) {
-            Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.something_went_wrong),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     @Throws(IOException::class)
     private fun getBitmapFromUri(uri: Uri): Bitmap? {
-        val parcelFileDescriptor = contentResolver.openFileDescriptor(uri, "r")
+        val parcelFileDescriptor =
+            contentResolver.openFileDescriptor(uri, "r")
         val fileDescriptor = parcelFileDescriptor?.fileDescriptor
         val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
         parcelFileDescriptor?.close()
