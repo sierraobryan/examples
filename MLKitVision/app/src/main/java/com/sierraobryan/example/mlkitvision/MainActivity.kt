@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
+import com.sierraobryan.example.mlkitvision.ml.CustomFlowerModel
 import com.sierraobryan.example.mlkitvision.ml.FlowerModel
 import org.tensorflow.lite.support.image.TensorImage
 import java.io.IOException
@@ -75,8 +76,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun processTensorImage(bitmap: Bitmap) {
-        val tfImage = TensorImage.fromBitmap(imageBitmap!!)
-        val flowerModel = FlowerModel.newInstance(this)
+        val tfImage = TensorImage.fromBitmap(bitmap)
+        val flowerModel = CustomFlowerModel.newInstance(this)
         val outputs = flowerModel.process(tfImage).probabilityAsCategoryList.apply {
             sortByDescending { it.score }
         }
