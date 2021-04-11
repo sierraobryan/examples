@@ -4,5 +4,5 @@
     <string name="select_image">Select Image</string>
     <string name="something_went_wrong">Oops, something went wrong!</string>
     <string name="nothing_found">Nothing Found!</string>
-    <string name="confidence_format">Confidence: %s</string>
+    <string name="confidence_format">Confidence: %.2f%%</string>
 </resources>
