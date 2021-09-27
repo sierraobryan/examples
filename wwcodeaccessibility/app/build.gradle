@@ -43,24 +43,23 @@ android {
 }
 
 ext {
-    moshiVersionCodeGen = "1.11.0"
+    moshiVersionCodeGen = "1.12.0"
     moshiVersion = "1.11.0"
     retrofitVersion = "2.9.0"
 
-    daggerHiltVersion = "1.0.0-alpha02"
-    daggerHiltCoreVersion = "2.29.1-alpha"
+    daggerHiltCoreVersion = "2.38.1"
 }
 
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    implementation "androidx.fragment:fragment-ktx:1.2.5"
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation "androidx.fragment:fragment-ktx:1.3.6"
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -71,11 +70,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     implementation "com.squareup.retrofit2:converter-moshi:${retrofitVersion}"
 
+    // hilt DI
     implementation "com.google.dagger:hilt-android:${daggerHiltCoreVersion}"
-    implementation "androidx.hilt:hilt-common:${daggerHiltVersion}"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:${daggerHiltVersion}"
-    kapt "androidx.hilt:hilt-compiler:${daggerHiltVersion}"
     kapt "com.google.dagger:hilt-android-compiler:${daggerHiltCoreVersion}"
-    androidTestImplementation "com.google.dagger:hilt-android-testing:${daggerHiltCoreVersion}"
-    kaptAndroidTest "com.google.dagger:hilt-compiler:${daggerHiltCoreVersion}"
 }
