@@ -14,7 +14,6 @@ class ProtoAppDataStore @Inject constructor(
 
     val myMemberFlow: Flow<Member?> = protoAppDataStore.data
         .map { memberPreferences ->
-            // The myCounter property is generated for you from your proto schema!
             try {
                 Gson().fromJson(memberPreferences.member, Member::class.java)
             } catch (e: Exception) {
