@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
-import androidx.datastore.migrations.SharedPreferencesView
 import androidx.datastore.preferences.SharedPreferencesMigration
+import androidx.datastore.migrations.SharedPreferencesMigration as ProtoSharedPrefsMigration
+import androidx.datastore.migrations.SharedPreferencesView
 import com.sierraobryan.datastore_example.MemberPreferences
 import com.sierraobryan.datastore_example.data.models.ProtoPreferencesSerializer
-import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.sierraobryan.datastore_example.util.Constants
@@ -53,16 +53,16 @@ class AppModule {
         return DataStoreFactory.create(
             produceFile = { context.preferencesDataStoreFile(Constants.PB_FILE_NAME) },
             serializer = ProtoPreferencesSerializer,
-//            migrations = listOf(
-//                SharedPreferencesMigration(
-//                    context,
-//                    Constants.SHARED_PREFERENCES_NAME
-//                ) { sharedPrefs: SharedPreferencesView, currentData: MemberPreferences ->
-//                    currentData.toBuilder().setMember(
-//                        sharedPrefs.getString(Constants.MEMBER_KEY)
-//                    ).build()
-//                }
-//            )
+            migrations = listOf(
+                ProtoSharedPrefsMigration(
+                    context,
+                    Constants.SHARED_PREFERENCES_NAME
+                ) { sharedPrefs: SharedPreferencesView, currentData: MemberPreferences ->
+                    currentData.toBuilder().setMember(
+                        sharedPrefs.getString(Constants.MEMBER_KEY)
+                    ).build()
+                }
+            )
         )
     }
 }
