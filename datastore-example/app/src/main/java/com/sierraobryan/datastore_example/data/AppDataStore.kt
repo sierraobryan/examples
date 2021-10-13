@@ -1,8 +1,11 @@
 package com.sierraobryan.datastore_example.data
 
-import androidx.datastore.DataStore
-import androidx.datastore.preferences.*
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.sierraobryan.datastore_example.data.models.Member
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -12,17 +15,19 @@ class AppDataStore @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
 
-    // this can only be Int, Long, Boolean, Float, Double, String
-    private val MEMBER = preferencesKey<String>("member")
+    private object PreferencesKeys {
+        // this can only be Int, Long, Boolean, Float, Double, String
+        val MEMBER = stringPreferencesKey("member")
 
-    // only strings are currently supported
-    private val MEMBERS = preferencesSetKey<String>("members")
+        // only strings are currently supported
+        val MEMBERS = stringPreferencesKey("members")
+    }
 
     val myMemberFlow: Flow<Member?> = dataStore.data
         .map { currentPreferences ->
             // there's no type safety here.
             try {
-                Gson().fromJson(currentPreferences[MEMBER], Member::class.java)
+                Gson().fromJson(currentPreferences[PreferencesKeys.MEMBER], Member::class.java)
             } catch (e: Exception) {
                 null
             }
@@ -30,20 +35,19 @@ class AppDataStore @Inject constructor(
 
     suspend fun saveMember(member: Member) {
         dataStore.edit { preferences ->
-            preferences[MEMBER] = Gson().toJson(member)
+            preferences[PreferencesKeys.MEMBER] = Gson().toJson(member)
         }
     }
 
     suspend fun removeMember() {
         dataStore.edit { preferences ->
-            preferences.remove(MEMBER)
+            preferences.remove(PreferencesKeys.MEMBER)
         }
     }
 
     val myMembersFlow: Flow<List<Member>?> = dataStore.data
         .map { currentPreferences ->
-            currentPreferences[MEMBERS]?.map {
-                Gson().fromJson(it, Member::class.java)
-            }
+            val listType = object : TypeToken<List<Member>>() {}.type
+            Gson().fromJson(currentPreferences[PreferencesKeys.MEMBERS], listType)
         }
 }

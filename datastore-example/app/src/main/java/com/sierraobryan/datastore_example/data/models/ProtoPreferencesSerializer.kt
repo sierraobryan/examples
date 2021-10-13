@@ -1,8 +1,8 @@
 package com.sierraobryan.datastore_example.data.models
 
 import android.util.Log
-import androidx.datastore.CorruptionException
-import androidx.datastore.Serializer
+import androidx.datastore.core.CorruptionException
+import androidx.datastore.core.Serializer
 import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
 import com.sierraobryan.datastore_example.MemberPreferences
 import java.io.ByteArrayOutputStream
@@ -11,7 +11,10 @@ import java.io.OutputStream
 import java.nio.charset.StandardCharsets
 
 object ProtoPreferencesSerializer : Serializer<MemberPreferences> {
-    override fun readFrom(input: InputStream): MemberPreferences {
+    override val defaultValue: MemberPreferences = MemberPreferences.getDefaultInstance()
+
+    @Suppress("BlockingMethodInNonBlockingContext")
+    override suspend fun readFrom(input: InputStream): MemberPreferences {
         try {
             Log.d("Sierra", convertInputStreamToString(input) ?: "")
             return MemberPreferences.parseFrom(input)
@@ -19,8 +22,6 @@ object ProtoPreferencesSerializer : Serializer<MemberPreferences> {
             throw CorruptionException("Cannot read proto.", exception)
         }
     }
-
-    override fun writeTo(t: MemberPreferences, output: OutputStream) = t.writeTo(output)
 
 
     private fun convertInputStreamToString(inputStream: InputStream): String? {
@@ -32,4 +33,8 @@ object ProtoPreferencesSerializer : Serializer<MemberPreferences> {
         }
         return result.toString(StandardCharsets.UTF_8.name())
     }
+
+    @Suppress("BlockingMethodInNonBlockingContext")
+    override suspend fun writeTo(t: MemberPreferences, output: OutputStream) = t.writeTo(output)
+
 }

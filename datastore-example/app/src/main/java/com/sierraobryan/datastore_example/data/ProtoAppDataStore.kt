@@ -1,12 +1,10 @@
 package com.sierraobryan.datastore_example.data
 
 import android.util.Log
-import androidx.datastore.DataStore
-import com.google.gson.Gson
+import androidx.datastore.core.DataStore
 import com.sierraobryan.datastore_example.MemberPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
