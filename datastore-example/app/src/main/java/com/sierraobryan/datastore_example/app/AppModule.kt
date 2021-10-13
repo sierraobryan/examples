@@ -2,16 +2,16 @@ package com.sierraobryan.datastore_example.app
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.SharedPreferencesMigration
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.createDataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.preferencesDataStoreFile
 import com.sierraobryan.datastore_example.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
 @Module
@@ -28,17 +28,16 @@ class AppModule {
     }
 
     @Provides
-    fun provideDataStore(
+    @Singleton
+    fun provideAppDataStore(
         @ApplicationContext context: Context
-    ): DataStore<Preferences> {
-        return context.createDataStore(
-            name = Constants.SHARED_PREFERENCES_NAME,
-            migrations = listOf(
-                SharedPreferencesMigration(
-                    context,
-                    Constants.SHARED_PREFERENCES_NAME
-                )
-            ),
-        )
-    }
+    ) = PreferenceDataStoreFactory.create(
+        migrations = listOf(
+            SharedPreferencesMigration(
+                context, Constants.SHARED_PREFERENCES_NAME
+            )
+        ),
+        produceFile = { context.preferencesDataStoreFile(Constants.SHARED_PREFERENCES_NAME) }
+    )
+
 }
