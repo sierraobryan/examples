@@ -2,20 +2,22 @@ package com.sierraobryan.datastore_example.app
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.datastore.DataStore
-import androidx.datastore.createDataStore
-import androidx.datastore.migrations.SharedPreferencesView
-import androidx.datastore.preferences.Preferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.preferences.SharedPreferencesMigration
-import androidx.datastore.preferences.createDataStore
+import androidx.datastore.migrations.SharedPreferencesMigration as ProtoSharedPrefsMigration
+import androidx.datastore.migrations.SharedPreferencesView
 import com.sierraobryan.datastore_example.MemberPreferences
 import com.sierraobryan.datastore_example.data.models.ProtoPreferencesSerializer
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.preferencesDataStoreFile
 import com.sierraobryan.datastore_example.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
 @Module
@@ -32,29 +34,27 @@ class AppModule {
     }
 
     @Provides
-    fun provideDataStore(
+    @Singleton
+    fun provideAppDataStore(
         @ApplicationContext context: Context
-    ): DataStore<Preferences> {
-        return context.createDataStore(
-            name = Constants.SHARED_PREFERENCES_NAME,
-            migrations = listOf(
-                SharedPreferencesMigration(
-                    context,
-                    Constants.SHARED_PREFERENCES_NAME
-                )
-            ),
-        )
-    }
+    ) = PreferenceDataStoreFactory.create(
+        migrations = listOf(
+            SharedPreferencesMigration(
+                context, Constants.SHARED_PREFERENCES_NAME
+            )
+        ),
+        produceFile = { context.preferencesDataStoreFile(Constants.SHARED_PREFERENCES_NAME) }
+    )
 
     @Provides
     fun provideProtoDataStore(
         @ApplicationContext context: Context
     ): DataStore<MemberPreferences> {
-        return context.createDataStore(
-            fileName = Constants.PB_FILE_NAME,
+        return DataStoreFactory.create(
+            produceFile = { context.preferencesDataStoreFile(Constants.PB_FILE_NAME) },
             serializer = ProtoPreferencesSerializer,
             migrations = listOf(
-                androidx.datastore.migrations.SharedPreferencesMigration(
+                ProtoSharedPrefsMigration(
                     context,
                     Constants.SHARED_PREFERENCES_NAME
                 ) { sharedPrefs: SharedPreferencesView, currentData: MemberPreferences ->
