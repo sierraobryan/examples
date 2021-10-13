@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun processTensorImage(bitmap: Bitmap) {
         val tfImage = TensorImage.fromBitmap(bitmap)
-        val flowerModel = CustomFlowerModel.newInstance(this)
+        val flowerModel = FlowerModel.newInstance(this)
         val outputs = flowerModel.process(tfImage).probabilityAsCategoryList.apply {
             sortByDescending { it.score }
         }

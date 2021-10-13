@@ -1,20 +1,31 @@
 package com.sierraobryan.wwcode_accessibility
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.sierraobryan.wwcode_accessibility.ui.main.MainFragment
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import com.sierraobryan.wwcode_accessibility.ui.main.MainScreen
+import com.sierraobryan.wwcode_accessibility.ui.main.MainViewModel
+import com.sierraobryan.wwcode_accessibility.ui.theme.MyApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
 
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
-                .commitNow()
+
+        val mainViewModel: MainViewModel by viewModels()
+
+        setContent {
+            MyApplicationTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(color = MaterialTheme.colors.background) {
+                    MainScreen()
+                }
+            }
         }
     }
 }
